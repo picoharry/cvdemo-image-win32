@@ -7,11 +7,13 @@
 #include "opencv2/videoio.hpp"
 #include <opencv2/video.hpp>
 #include <stdio.h>
-#include <iostream>
 #include <sstream>
+#include <boost/program_options.hpp>
 
 using namespace cv;
 using namespace std;
+namespace po = boost::program_options;
+
 
 // Global variables
 Mat frame; //current frame
@@ -23,8 +25,95 @@ int keyboard; //input from keyboard
 void processImages(char* firstFrameFilename);
 
 
-int main(int argc, char* argv[])
+int main(int argc, const char* argv[])
 {
+	// http://www.boost.org/doc/libs/1_62_0/doc/html/program_options.html
+
+
+	// Declare a group of options that will be 
+	// allowed only on command line
+	po::options_description generic("Generic options");
+	generic.add_options()
+		("version,V", "Print version string")
+		("help,H", "Produce help message")
+		;
+
+	// Declare a group of options that will be 
+	// allowed both on command line and in
+	// config file
+	po::options_description config("Configuration");
+	config.add_options()
+		("foreground-image,F", po::value< vector<string> >(), "Foreground image file")
+		("background-image,B", po::value< vector<string> >(), "Background image file")
+		;
+
+	// Hidden options, will be allowed both on command line and
+	// in config file, but will not be shown to the user.
+	float scale_factor;
+	po::options_description hidden("Hidden options");
+	hidden.add_options()
+		("scale-factor,S", po::value<float>(&scale_factor)->default_value(1.0f), "Scale factor (default: 1.0)")
+		;
+
+
+
+	po::options_description cmdline_options;
+	cmdline_options.add(generic).add(config).add(hidden);
+
+	po::options_description config_file_options;
+	config_file_options.add(config).add(hidden);
+
+	po::options_description visible("Allowed options");
+	visible.add(generic).add(config);
+
+
+
+	po::variables_map vm;
+	// ???
+	// po::store(po::command_line_parser(argc, argv).options(cmdline_options).run(), vm);
+	po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
+	// ???
+	// po::store(po::parse_config_file<char>("cvdemo.image.subtract.cfg", config_file_options), vm, true);
+	// ???
+	po::notify(vm);
+
+
+
+	if (vm.count("help")) {
+		cout << visible << endl;
+		return 1;
+	}
+	if (vm.count("version")) {
+		cout << "version..." << endl;
+		return 1;
+	}
+
+	cout << "Scale factor was set to " << vm["scale-factor"].as<float>() << "." << endl;
+
+	if (vm.count("foreground-image")) {
+		// ???
+		// cout << "Foreground image files: " << vm["foreground-image"].as<vector<string>>() << "." << endl;
+	}
+	else {
+		// error? Use default value????
+		cout << "Foreground image files not specified." << endl;
+	}
+	if (vm.count("background-image")) {
+		// ???
+		//cout << "Background image files: " << vm["foreground-image"].as<vector<string>>() << "." << endl;
+	}
+	else {
+		// error? Use default value????
+		cout << "Background image files not specified." << endl;
+	}
+
+
+
+
+
+
+
+
 	//check for the input parameter correctness
 	if (argc != 2) {
 		cerr << "Incorret input list" << endl;
@@ -41,7 +130,13 @@ int main(int argc, char* argv[])
 	pMOG2 = createBackgroundSubtractorMOG2(); //MOG2 approach
 
 											  //input data coming from a sequence of images
-	processImages(argv[1]);
+
+
+	// temporary
+	char* name = const_cast<char *>(argv[1]);
+
+	processImages(name);
+
 
 	//destroy GUI windows
 	destroyAllWindows();
