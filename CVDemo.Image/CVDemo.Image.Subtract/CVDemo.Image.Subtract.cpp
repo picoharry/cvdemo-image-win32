@@ -76,7 +76,9 @@ int main(int argc, const char* argv[])
 	// ???
 	// po::store(po::command_line_parser(argc, argv).options(cmdline_options).run(), vm);
 	try {
-		po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
+		// po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
+		// Ignore unknown options???
+		po::store(po::command_line_parser(argc, argv).options(cmdline_options).allow_unregistered().run(), vm);
 	}
 	catch (const exception& e) {   // ignore
 		cerr << e.what() << endl;
