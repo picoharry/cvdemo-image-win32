@@ -8,6 +8,7 @@
 #include <opencv2/video.hpp>
 #include <stdio.h>
 #include <sstream>
+#include <stdexcept>
 #include <boost/program_options.hpp>
 
 using namespace cv;
@@ -43,8 +44,11 @@ int main(int argc, const char* argv[])
 	// config file
 	po::options_description config("Configuration");
 	config.add_options()
-		("foreground-image,F", po::value< vector<string> >(), "Foreground image file")
-		("background-image,B", po::value< vector<string> >(), "Background image file")
+		// Why is the value type vector<string>, not string?????
+		//("foreground-image,F", po::value<string>()->multitoken(), "Foreground image file")
+		//("background-image,B", po::value<string>()->multitoken(), "Background image file")
+		("foreground-image,F", po::value<vector<string>>()->multitoken(), "Foreground image file")
+		("background-image,B", po::value<vector<string>>()->multitoken(), "Background image file")
 		;
 
 	// Hidden options, will be allowed both on command line and
@@ -71,9 +75,28 @@ int main(int argc, const char* argv[])
 	po::variables_map vm;
 	// ???
 	// po::store(po::command_line_parser(argc, argv).options(cmdline_options).run(), vm);
-	po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
+	try {
+		po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
+	}
+	catch (const exception& e) {   // ignore
+		cerr << e.what() << endl;
+
+		return -1;
+	}
+	catch (...)
+	{
+		// testing...
+		cout << "catch all" << endl;
+		cerr << "catch all" << endl;
+
+	}
 	// ???
-	// po::store(po::parse_config_file<char>("cvdemo.image.subtract.cfg", config_file_options), vm, true);
+	//try {
+	//	po::store(po::parse_config_file<char>("cvdemo.image.subtract.cfg", config_file_options), vm, true);
+	//}
+	//catch (const Exception& e) {   // ignore
+	//	cerr << e.what() << endl;
+	//}
 	// ???
 	po::notify(vm);
 
@@ -93,6 +116,20 @@ int main(int argc, const char* argv[])
 	if (vm.count("foreground-image")) {
 		// ???
 		// cout << "Foreground image files: " << vm["foreground-image"].as<vector<string>>() << "." << endl;
+		cout << "Foreground image file count: " << vm["foreground-image"].as<vector<string>>().size() << "." << endl;
+		cout << "Foreground image files: " << endl;
+		for (auto &i : vm["foreground-image"].as<vector<string>>()) {
+			cout << i << endl;
+		}
+
+		//const string arr[] = {"aa.png", "bb.png"};
+		//vector<string> vec(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		//// count << vec.at<string>(0) << endl;
+		//for (auto &i : vec) {
+		//	std::cout << i << endl;
+		//}
+
+
 	}
 	else {
 		// error? Use default value????
@@ -100,7 +137,12 @@ int main(int argc, const char* argv[])
 	}
 	if (vm.count("background-image")) {
 		// ???
-		//cout << "Background image files: " << vm["foreground-image"].as<vector<string>>() << "." << endl;
+		//cout << "Background image files: " << vm["background-image"].as<vector<string>>() << "." << endl;
+		cout << "Background image file count: " << vm["background-image"].as<vector<string>>().size() << "." << endl;
+		cout << "Background image files: " << endl;
+		for (auto &i : vm["background-image"].as<vector<string>>()) {
+			cout << i << endl;
+		}
 	}
 	else {
 		// error? Use default value????
@@ -118,7 +160,7 @@ int main(int argc, const char* argv[])
 	if (argc != 2) {
 		cerr << "Incorret input list" << endl;
 		cerr << "exiting..." << endl;
-		system("pause");
+		// system("pause");
 		return EXIT_FAILURE;
 	}
 
