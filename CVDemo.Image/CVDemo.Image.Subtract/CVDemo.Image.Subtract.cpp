@@ -25,7 +25,8 @@ Ptr<BackgroundSubtractor> pMOG2; //MOG2 Background subtractor
 int keyboard; //input from keyboard
 
 // Forward decl.
-void processImages(const char* firstFrameFilename);
+// void processImages(const char* firstFrameFilename);
+void processImages(const string filename);
 
 
 int main(int argc, const char* argv[])
@@ -94,10 +95,12 @@ int main(int argc, const char* argv[])
 
 	// temporary
 	// char* name = const_cast<char *>(argv[1]);
-	const char* name = options.GetForegroundImageFiles()[0].c_str();
+	//const char* name = options.GetForegroundImageFiles()[0].c_str();
+	//// const char* name = "../../sample-data/lena.jpg";
+	//processImages(name);
 
-	processImages(name);
-
+	const string filename = options.GetForegroundImageFiles()[0];
+	processImages(filename);
 
 	//destroy GUI windows
 	destroyAllWindows();
@@ -105,15 +108,18 @@ int main(int argc, const char* argv[])
 }
 
 
-void processImages(const char* fistFrameFilename)
+void processImages(const string fistFrameFilename)
 {
 	//read the first file of the sequence
+	//const string filename = "../../sample-data/lena.jpg";
+	//frame = imread(filename);
 	frame = imread(fistFrameFilename);
 	if (frame.empty()) {
 		//error in opening the first image
 		cerr << "Unable to open first image frame: " << fistFrameFilename << endl;
 		exit(EXIT_FAILURE);
 	}
+
 	//current image filename
 	string fn(fistFrameFilename);
 	//read input data. ESC or 'q' for quitting
@@ -141,19 +147,23 @@ void processImages(const char* fistFrameFilename)
 		imshow("FG Mask MOG 2", fgMaskMOG2);
 		//get the input from the keyboard
 		keyboard = waitKey(30);
-		//search for the next image in the sequence
-		ostringstream oss;
-		oss << (frameNumber + 1);
-		string nextFrameNumberString = oss.str();
-		string nextFrameFilename = prefix + nextFrameNumberString + suffix;
-		//read the next frame
-		frame = imread(nextFrameFilename);
-		if (frame.empty()) {
-			//error in opening the next image in the sequence
-			cerr << "Unable to open image frame: " << nextFrameFilename << endl;
-			exit(EXIT_FAILURE);
-		}
-		//update the path of the current frame
-		fn.assign(nextFrameFilename);
+
+		// tbd:
+
+		////search for the next image in the sequence
+		//ostringstream oss;
+		//oss << (frameNumber + 1);
+		//string nextFrameNumberString = oss.str();
+		//string nextFrameFilename = prefix + nextFrameNumberString + suffix;
+		////read the next frame
+		//frame = imread(nextFrameFilename);
+		//if (frame.empty()) {
+		//	//error in opening the next image in the sequence
+		//	cerr << "Unable to open image frame: " << nextFrameFilename << endl;
+		//	exit(EXIT_FAILURE);
+		//}
+		////update the path of the current frame
+		//fn.assign(nextFrameFilename);
+
 	}
 }
