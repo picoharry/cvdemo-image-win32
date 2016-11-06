@@ -25,7 +25,7 @@ Ptr<BackgroundSubtractor> pMOG2; //MOG2 Background subtractor
 int keyboard; //input from keyboard
 
 // Forward decl.
-void processImages(char* firstFrameFilename);
+void processImages(const char* firstFrameFilename);
 
 
 int main(int argc, const char* argv[])
@@ -163,7 +163,9 @@ int main(int argc, const char* argv[])
 
 
 
-    ProgramOptions options = ProgramOptions(argc, argv, "");
+    // testing...
+    string configFile = "../cvdemo.image.subtract-sample.cfg";
+    ProgramOptions options = ProgramOptions(argc, argv, configFile);
 
 	if (options.IsForUsageInfo()) {
 		options.DisplayUsageInfo(cout);
@@ -172,6 +174,11 @@ int main(int argc, const char* argv[])
 	}
 	if (options.IsForVersionInfo()) {
 		cout << "Version = 0.0.1" << endl;
+		system("pause");
+		return -1;
+	}
+	if (options.IsForOptionsDisplay()) {
+		options.DisplayInputOptions(cout);
 		system("pause");
 		return -1;
 	}
@@ -200,13 +207,13 @@ int main(int argc, const char* argv[])
 
 
 
-	//check for the input parameter correctness
-	if (argc != 2) {
-		cerr << "Incorret input list" << endl;
-		cerr << "exiting..." << endl;
-		// system("pause");
-		return EXIT_FAILURE;
-	}
+	////check for the input parameter correctness
+	//if (argc != 2) {
+	//	cerr << "Incorret input list" << endl;
+	//	cerr << "exiting..." << endl;
+	//	// system("pause");
+	//	return EXIT_FAILURE;
+	//}
 
 	//create GUI windows
 	namedWindow("Frame");
@@ -219,7 +226,8 @@ int main(int argc, const char* argv[])
 
 
 	// temporary
-	char* name = const_cast<char *>(argv[1]);
+	// char* name = const_cast<char *>(argv[1]);
+	const char* name = options.GetForegroundImageFiles()[0].c_str();
 
 	processImages(name);
 
@@ -230,7 +238,7 @@ int main(int argc, const char* argv[])
 }
 
 
-void processImages(char* fistFrameFilename)
+void processImages(const char* fistFrameFilename)
 {
 	//read the first file of the sequence
 	frame = imread(fistFrameFilename);

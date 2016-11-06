@@ -32,8 +32,9 @@ namespace cvdemo
 			// allowed only on command line
 			po::options_description generic("Generic options");
 			generic.add_options()
-				("version,V", "Print version string")
 				("help,H", "Produce help message")
+				("version,V", "Print version string")
+				("options,O", "Print input options")
 				;
 
 			// Declare a group of options that will be 
@@ -94,6 +95,9 @@ namespace cvdemo
 			// ???
 			if (configFilePath.size() > 0) {
 				try {
+					// temporary
+					cerr << "Parsing config file: " << configFilePath << "..." << endl;
+					// temporary
 					po::parsed_options configParsed = po::parse_config_file<char>(configFilePath.c_str(), config_file_options, true);  // allow_unregistered == true.
 					po::store(configParsed, vm, true);
 				}
@@ -120,6 +124,12 @@ namespace cvdemo
 				// cout << "version..." << endl;
 				// isParsed = true;
 				isForVersionInfo = true;
+				// return;   // continue parsing???
+			}
+			if (vm.count("options")) {
+				// cout << "options..." << endl;
+				// isParsed = true;
+				isForOptionsDisplay = true;
 				// return;   // continue parsing???
 			}
 

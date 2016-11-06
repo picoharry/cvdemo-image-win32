@@ -27,6 +27,7 @@ namespace cvdemo
 			// bool isForInfoOnly = false;
 			bool isForUsageInfo = false;
 			bool isForVersionInfo = false;
+			bool isForOptionsDisplay = false;   // true == like "echo" for options.
 			// These flags make sense only if isParsed == true.
 			bool hasSyntacticError = false;
 			bool isValid = false;
@@ -41,8 +42,10 @@ namespace cvdemo
 			//}
 			bool IsForInfoOnly()
 			{
-				// return isForInfoOnly;
-				return IsForUsageInfo() || IsForVersionInfo();
+				if (!isParsed) {
+					_Parse();
+				}
+				return isForUsageInfo || isForVersionInfo || isForOptionsDisplay;
 			}
 			bool IsForUsageInfo()
 			{
@@ -53,10 +56,17 @@ namespace cvdemo
 			}
 			bool IsForVersionInfo()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				return isForVersionInfo;
+			}
+			bool IsForOptionsDisplay()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				return isForOptionsDisplay;
 			}
 			bool HasSyntacticError()
 			{
@@ -83,6 +93,46 @@ namespace cvdemo
 				//}
 				os << visible_options << std::endl;
 			}
+			void DisplayInputOptions(std::ostream& os)
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+
+				os << "Input options parsed:" << std::endl;
+				os << "Has syntax error? " << hasSyntacticError << std::endl;
+				os << "Is orverall valid? " << isValid << std::endl;
+
+
+				std::vector<std::string> unrecognized = GetUnrecognizedArgs();
+				for (auto &i : unrecognized) {
+					os << "Unrecognized: " << i << std::endl;
+				}
+
+				// ???
+				//for (auto &a : vm) {
+				//	os << "Name = " << a.first << "; Value = " << a.second.value << std::endl;
+				//}
+
+				os << "Scale factor is set to " << vm["scale-factor"].as<float>() << "." << std::endl;
+
+				std::vector<std::string> fgFiles;
+				if (vm.count("foreground-image")) {
+					fgFiles = vm["foreground-image"].as<std::vector<std::string>>();
+				}
+				for (auto &i : fgFiles) {
+					os << "Foreground file: " << i << std::endl;
+				}
+
+				std::vector<std::string> bgFiles;
+				if (vm.count("background-image")) {
+					bgFiles = vm["background-image"].as<std::vector<std::string>>();
+				}
+				for (auto &i : bgFiles) {
+					os << "Background file: " << i << std::endl;
+				}
+
+			}
 			std::vector<std::string> GetUnrecognizedArgs()
 			{
 				if (!isParsed) {
@@ -107,22 +157,22 @@ namespace cvdemo
 			void DisplayForegroundImageFiles(std::ostream& os)
 			{
 				// std::vector<std::string> files = GetForegroundImageFiles();
-				std::vector<std::string> files;
+				std::vector<std::string> fgFiles;
 				if (vm.count("foreground-image")) {
-					files = vm["foreground-image"].as<std::vector<std::string>>();
+					fgFiles = vm["foreground-image"].as<std::vector<std::string>>();
 				}
-				for (auto &i : files) {
+				for (auto &i : fgFiles) {
 					os << "Foreground file: " << i << std::endl;
 				}
 			}
 			void DisplayBackgroundImageFiles(std::ostream& os)
 			{
 				// std::vector<std::string> files = GetBackgroundImageFiles();
-				std::vector<std::string> files;
+				std::vector<std::string> bgFiles;
 				if (vm.count("background-image")) {
-					files = vm["background-image"].as<std::vector<std::string>>();
+					bgFiles = vm["background-image"].as<std::vector<std::string>>();
 				}
-				for (auto &i : files) {
+				for (auto &i : bgFiles) {
 					os << "Background file: " << i << std::endl;
 				}
 			}
