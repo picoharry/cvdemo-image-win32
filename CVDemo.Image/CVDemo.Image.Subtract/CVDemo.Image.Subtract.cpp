@@ -9,11 +9,13 @@
 #include <stdio.h>
 #include <sstream>
 #include <stdexcept>
-#include <boost/program_options.hpp>
+// #include <boost/program_options.hpp>
+#include "CVDemo.Image.ProgramOptions.hpp"
 
 using namespace cv;
 using namespace std;
-namespace po = boost::program_options;
+using namespace cvdemo::image;
+// namespace po = boost::program_options;
 
 
 // Global variables
@@ -28,129 +30,169 @@ void processImages(char* firstFrameFilename);
 
 int main(int argc, const char* argv[])
 {
-	// http://www.boost.org/doc/libs/1_62_0/doc/html/program_options.html
+	//// http://www.boost.org/doc/libs/1_62_0/doc/html/program_options.html
 
 
-	// Declare a group of options that will be 
-	// allowed only on command line
-	po::options_description generic("Generic options");
-	generic.add_options()
-		("version,V", "Print version string")
-		("help,H", "Produce help message")
-		;
+	//// Declare a group of options that will be 
+	//// allowed only on command line
+	//po::options_description generic("Generic options");
+	//generic.add_options()
+	//	("version,V", "Print version string")
+	//	("help,H", "Produce help message")
+	//	;
 
-	// Declare a group of options that will be 
-	// allowed both on command line and in
-	// config file
-	po::options_description config("Configuration");
-	config.add_options()
-		// Why is the value type vector<string>, not string?????
-		//("foreground-image,F", po::value<string>()->multitoken(), "Foreground image file")
-		//("background-image,B", po::value<string>()->multitoken(), "Background image file")
-		("foreground-image,F", po::value<vector<string>>()->multitoken(), "Foreground image file")
-		("background-image,B", po::value<vector<string>>()->multitoken(), "Background image file")
-		;
+	//// Declare a group of options that will be 
+	//// allowed both on command line and in
+	//// config file
+	//po::options_description config("Configuration");
+	//config.add_options()
+	//	// Why is the value type vector<string>, not string?????
+	//	//("foreground-image,F", po::value<string>()->multitoken(), "Foreground image file")
+	//	//("background-image,B", po::value<string>()->multitoken(), "Background image file")
+	//	("foreground-image,F", po::value<vector<string>>()->multitoken(), "Foreground image file")
+	//	("background-image,B", po::value<vector<string>>()->multitoken(), "Background image file")
+	//	;
 
-	// Hidden options, will be allowed both on command line and
-	// in config file, but will not be shown to the user.
-	float scale_factor;
-	po::options_description hidden("Hidden options");
-	hidden.add_options()
-		("scale-factor,S", po::value<float>(&scale_factor)->default_value(1.0f), "Scale factor (default: 1.0)")
-		;
-
-
-
-	po::options_description cmdline_options;
-	cmdline_options.add(generic).add(config).add(hidden);
-
-	po::options_description config_file_options;
-	config_file_options.add(config).add(hidden);
-
-	po::options_description visible("Allowed options");
-	visible.add(generic).add(config);
+	//// Hidden options, will be allowed both on command line and
+	//// in config file, but will not be shown to the user.
+	//float scale_factor;
+	//po::options_description hidden("Hidden options");
+	//hidden.add_options()
+	//	("scale-factor,S", po::value<float>(&scale_factor)->default_value(1.0f), "Scale factor (default: 1.0)")
+	//	;
 
 
 
-	po::variables_map vm;
-	// ???
-	// po::store(po::command_line_parser(argc, argv).options(cmdline_options).run(), vm);
-	try {
-		// po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
-		// Ignore unknown options???
-		po::store(po::command_line_parser(argc, argv).options(cmdline_options).allow_unregistered().run(), vm);
-	}
-	catch (const exception& e) {   // ignore
-		cerr << e.what() << endl;
+	//po::options_description cmdline_options;
+	//cmdline_options.add(generic).add(config).add(hidden);
 
-		return -1;
-	}
-	catch (...)
-	{
-		// testing...
-		cout << "catch all" << endl;
-		cerr << "catch all" << endl;
+	//po::options_description config_file_options;
+	//config_file_options.add(config).add(hidden);
 
-	}
-	// ???
+	//po::options_description visible("Allowed options");
+	//visible.add(generic).add(config);
+
+
+
+	//po::variables_map vm;
+	//// ???
+	//// po::store(po::command_line_parser(argc, argv).options(cmdline_options).run(), vm);
 	//try {
-	//	po::store(po::parse_config_file<char>("cvdemo.image.subtract.cfg", config_file_options), vm, true);
+	//	// po::store(po::parse_command_line(argc, argv, cmdline_options), vm);
+	//	// Ignore unknown options???
+	//	po::parsed_options cmdlineParsed = po::command_line_parser(argc, argv).options(cmdline_options).allow_unregistered().run();
+	//	po::store(cmdlineParsed, vm);
+
+	//	vector<string> unrecognized = po::collect_unrecognized(cmdlineParsed.options, po::collect_unrecognized_mode::include_positional);
+	//	for (auto &i : unrecognized) {
+	//		cout << "Unrecognised: " << i << endl;
+	//	}
 	//}
-	//catch (const Exception& e) {   // ignore
+	//catch (const exception& e) {   // ignore
+	//	cerr << e.what() << endl;
+
+	//	return -1;
+	//}
+	//catch (...)
+	//{
+	//	// testing...
+	//	cout << "catch all" << endl;
+	//	cerr << "catch all" << endl;
+
+	//}
+	//// ???
+	//try {
+	//	po::parsed_options configParsed = po::parse_config_file<char>("cvdemo.image.subtract.cfg", config_file_options);
+	//	po::store(configParsed, vm, true);
+	//}
+	//catch (const exception& e) {   // ignore
 	//	cerr << e.what() << endl;
 	//}
-	// ???
-	po::notify(vm);
+	//// ???
+	//po::notify(vm);
 
 
 
-	if (vm.count("help")) {
-		cout << visible << endl;
-		return 1;
+	//if (vm.count("help")) {
+	//	cout << visible << endl;
+	//	return 1;
+	//}
+	//if (vm.count("version")) {
+	//	cout << "version..." << endl;
+	//	return 1;
+	//}
+
+	//cout << "Scale factor was set to " << vm["scale-factor"].as<float>() << "." << endl;
+
+	//if (vm.count("foreground-image")) {
+	//	// ???
+	//	// cout << "Foreground image files: " << vm["foreground-image"].as<vector<string>>() << "." << endl;
+	//	cout << "Foreground image file count: " << vm["foreground-image"].as<vector<string>>().size() << "." << endl;
+	//	cout << "Foreground image files: " << endl;
+	//	for (auto &i : vm["foreground-image"].as<vector<string>>()) {
+	//		cout << i << endl;
+	//	}
+
+	//	//const string arr[] = {"aa.png", "bb.png"};
+	//	//vector<string> vec(arr, arr + sizeof(arr) / sizeof(arr[0]));
+	//	//// count << vec.at<string>(0) << endl;
+	//	//for (auto &i : vec) {
+	//	//	std::cout << i << endl;
+	//	//}
+
+
+	//}
+	//else {
+	//	// error? Use default value????
+	//	cout << "Foreground image files not specified." << endl;
+	//}
+	//if (vm.count("background-image")) {
+	//	// ???
+	//	//cout << "Background image files: " << vm["background-image"].as<vector<string>>() << "." << endl;
+	//	cout << "Background image file count: " << vm["background-image"].as<vector<string>>().size() << "." << endl;
+	//	cout << "Background image files: " << endl;
+	//	for (auto &i : vm["background-image"].as<vector<string>>()) {
+	//		cout << i << endl;
+	//	}
+	//}
+	//else {
+	//	// error? Use default value????
+	//	cout << "Background image files not specified." << endl;
+	//}
+
+
+
+
+    ProgramOptions options = ProgramOptions(argc, argv, "");
+
+	if (options.IsForUsageInfo()) {
+		options.DisplayUsageInfo(cout);
+		system("pause");
+		return -1;
 	}
-	if (vm.count("version")) {
-		cout << "version..." << endl;
-		return 1;
+	if (options.IsForVersionInfo()) {
+		cout << "Version = 0.0.1" << endl;
+		system("pause");
+		return -1;
 	}
 
-	cout << "Scale factor was set to " << vm["scale-factor"].as<float>() << "." << endl;
+	if (! options.IsValid()) {
+		cerr << ">>> Invalid input options." << endl;
 
-	if (vm.count("foreground-image")) {
-		// ???
-		// cout << "Foreground image files: " << vm["foreground-image"].as<vector<string>>() << "." << endl;
-		cout << "Foreground image file count: " << vm["foreground-image"].as<vector<string>>().size() << "." << endl;
-		cout << "Foreground image files: " << endl;
-		for (auto &i : vm["foreground-image"].as<vector<string>>()) {
-			cout << i << endl;
-		}
-
-		//const string arr[] = {"aa.png", "bb.png"};
-		//vector<string> vec(arr, arr + sizeof(arr) / sizeof(arr[0]));
-		//// count << vec.at<string>(0) << endl;
-		//for (auto &i : vec) {
-		//	std::cout << i << endl;
+		//vector<string> unrecognized = options.GetUnrecognizedArgs();
+		//for (auto &i : unrecognized) {
+		//	cerr << "Unrecognised: " << i << endl;
 		//}
+		options.DisplayUnrecognizedArgs(cerr);
+		options.DisplayScaleFactor(cerr);
+		options.DisplayForegroundImageFiles(cerr);
+		options.DisplayBackgroundImageFiles(cerr);
 
+		options.DisplayUsageInfo(cerr);
 
+		system("pause");
+		return -1;
 	}
-	else {
-		// error? Use default value????
-		cout << "Foreground image files not specified." << endl;
-	}
-	if (vm.count("background-image")) {
-		// ???
-		//cout << "Background image files: " << vm["background-image"].as<vector<string>>() << "." << endl;
-		cout << "Background image file count: " << vm["background-image"].as<vector<string>>().size() << "." << endl;
-		cout << "Background image files: " << endl;
-		for (auto &i : vm["background-image"].as<vector<string>>()) {
-			cout << i << endl;
-		}
-	}
-	else {
-		// error? Use default value????
-		cout << "Background image files not specified." << endl;
-	}
-
 
 
 
