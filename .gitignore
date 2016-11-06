@@ -1,5 +1,15 @@
 ## Config files
 cvdemo.image.subtract.cfg
+cvdemo.image.resize.cfg
+cvdemo.image.overlay.cfg
+cvdemo.image.blend.cfg
+cvdemo.image.collage.cfg
+cvdemo.image.crop.cfg
+cvdemo.image.join.cfg
+cvdemo.image.mosaic.cfg
+cvdemo.image.overlay.cfg
+cvdemo.image.split.cfg
+cvdemo.image.spotlight.cfg
 
 
 ## Ignore Visual Studio temporary files, build results, and
