@@ -96,7 +96,7 @@ namespace cvdemo
 			if (configFilePath.size() > 0) {
 				try {
 					// temporary
-					cerr << "Parsing config file: " << configFilePath << "..." << endl;
+					// cerr << "Parsing config file: " << configFilePath << "..." << endl;
 					// temporary
 					po::parsed_options configParsed = po::parse_config_file<char>(configFilePath.c_str(), config_file_options, true);  // allow_unregistered == true.
 					po::store(configParsed, vm, true);
