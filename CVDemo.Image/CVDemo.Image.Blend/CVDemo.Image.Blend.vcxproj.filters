@@ -24,6 +24,12 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CVDemo.Image.ProgramOptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CVDemo.Image.TargetImageMode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -32,8 +38,17 @@
     <ClCompile Include="CVDemo.Image.Blend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CVDemo.Image.ProgramOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CVDemo.Image.ImageFileInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="CVDemo.Image.ImageFileInfo.hpp">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

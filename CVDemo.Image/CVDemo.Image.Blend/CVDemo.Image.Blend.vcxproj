@@ -145,14 +145,19 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CVDemo.Image.ProgramOptions.hpp" />
+    <ClInclude Include="CVDemo.Image.TargetImageMode.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CVDemo.Image.Blend.cpp" />
+    <ClCompile Include="CVDemo.Image.ImageFileInfo.cpp" />
+    <ClCompile Include="CVDemo.Image.ProgramOptions.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CVDemo.Image.ImageFileInfo.hpp" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

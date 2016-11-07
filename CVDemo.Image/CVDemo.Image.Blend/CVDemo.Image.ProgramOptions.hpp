@@ -4,6 +4,8 @@
 #include <vector>
 #include <stdexcept>
 #include <boost/program_options.hpp>
+#include "CVDemo.Image.TargetImageMode.hpp"
+#include "CVDemo.Image.ImageFileInfo.hpp"
 
 namespace po = boost::program_options;
 
@@ -28,7 +30,7 @@ namespace cvdemo
 			bool isForUsageInfo = false;
 			bool isForVersionInfo = false;
 			bool isForOptionsDisplay = false;   // true == like "echo" for options.
-			// These flags make sense only if isParsed == true.
+												// These flags make sense only if isParsed == true.
 			bool hasSyntacticError = false;
 			bool isValid = false;
 		public:
@@ -49,7 +51,7 @@ namespace cvdemo
 			}
 			bool IsForUsageInfo()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				return isForUsageInfo;
@@ -114,22 +116,35 @@ namespace cvdemo
 				//	os << "Name = " << a.first << "; Value = " << a.second.value << std::endl;
 				//}
 
-				os << "Scale factor is set to " << vm["scale-factor"].as<float>() << "." << std::endl;
+				if (vm.count("resize-allowed")) {
+					os << "Resize-Allowed is set to " << vm["resize-allowed"].as<bool>() << "." << std::endl;
+				}
+
+				if (vm.count("output-image-mode")) {
+					auto oim = vm["output-image-mode"].as<std::string>();
+					auto m = TargetImageModes::FromString(oim);
+					os << "Output image mode: " << m << ":" << oim << std::endl;
+				}
 
 				std::vector<std::string> fgFiles;
-				if (vm.count("foreground-image")) {
-					fgFiles = vm["foreground-image"].as<std::vector<std::string>>();
+				if (vm.count("image-file")) {
+					fgFiles = vm["image-file"].as<std::vector<std::string>>();
 				}
 				for (auto &i : fgFiles) {
 					os << "Foreground file: " << i << std::endl;
 				}
 
-				std::vector<std::string> bgFiles;
-				if (vm.count("background-image")) {
-					bgFiles = vm["background-image"].as<std::vector<std::string>>();
+				std::vector<float> weights;
+				if (vm.count("blending-weight")) {
+					weights = vm["blending-weight"].as<std::vector<float>>();
 				}
-				for (auto &i : bgFiles) {
-					os << "Background file: " << i << std::endl;
+				for (auto &i : weights) {
+					os << "Blending weight: " << i << std::endl;
+				}
+
+				// Processed values.
+				for (auto &i : imageFileInfos) {
+					os << "Image file info: " << i << std::endl;
 				}
 
 			}
@@ -142,7 +157,7 @@ namespace cvdemo
 			}
 
 		public:
-			// For debugging purpoes:
+			// For debugging purposes:
 			void DisplayUnrecognizedArgs(std::ostream& os)
 			{
 				std::vector<std::string> unrecognized = GetUnrecognizedArgs();
@@ -152,68 +167,102 @@ namespace cvdemo
 			}
 			void DisplayResizeAllowed(std::ostream& os)
 			{
-				os << "Scale factor is set to " << vm["scale-factor"].as<float>() << "." << std::endl;
+				if (vm.count("resize-allowed")) {
+					os << "Resize-Alloweed is set to " << vm["resize-allowed"].as<bool>() << "." << std::endl;
+				}
+			}
+			void DisplayOutputImageMode(std::ostream& os)
+			{
+				if (vm.count("output-image-mode")) {
+					// auto m = TargetImageModes::FromString(vm["output-image-mode"].as<std::string>());
+					auto m = vm["output-image-mode"].as<std::string>();
+					os << "Output image mode: " << m << std::endl;
+				}
 			}
 			void DisplayImageFileNames(std::ostream& os)
 			{
-				// std::vector<std::string> files = GetForegroundImageFiles();
 				std::vector<std::string> fgFiles;
-				if (vm.count("foreground-image")) {
-					fgFiles = vm["foreground-image"].as<std::vector<std::string>>();
+				if (vm.count("image-file")) {
+					fgFiles = vm["image-file"].as<std::vector<std::string>>();
 				}
 				for (auto &i : fgFiles) {
-					os << "Foreground file: " << i << std::endl;
+					os << "Image file: " << i << std::endl;
 				}
 			}
 			void DisplayBlendingWeights(std::ostream& os)
 			{
-				// std::vector<std::string> files = GetBackgroundImageFiles();
-				std::vector<std::string> bgFiles;
-				if (vm.count("background-image")) {
-					bgFiles = vm["background-image"].as<std::vector<std::string>>();
+				std::vector<float> weights;
+				if (vm.count("blending-weight")) {
+					weights = vm["blending-weight"].as<std::vector<float>>();
 				}
-				for (auto &i : bgFiles) {
-					os << "Background file: " << i << std::endl;
+				for (auto &i : weights) {
+					os << "Blending weight: " << i << std::endl;
+				}
+			}
+			void DisplayImageFileInfos(std::ostream& os)
+			{
+				for (auto &i : imageFileInfos) {
+					os << "Image file info: " << i << std::endl;
 				}
 			}
 
-		//private:
-		//	// float scaleFactor = 1.0f;
-		//	// std::vector<std::string> foregroundImageFiles;
-		//	// std::vector<std::string> backgroundImageFiles;
 		public:
-			float IsResizeAllowed()
+			bool IsResizeAllowed()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				if (!isValid) {
 					throw std::exception("Options are invalid.");
 				}
-				// return scaleFactor;
-				return vm["scale-factor"].as<float>();
+				return vm["resize-allowed"].as<bool>();
+			}
+			TargetImageMode GetOutputImageMode()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return TargetImageModes::FromString(vm["output-image-mode"].as<std::string>());
 			}
 			std::vector<std::string> GetImageFiles()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				if (!isValid) {
 					throw std::exception("Options are invalid.");
 				}
-				// return foregroundImageFiles;
-				return vm["foreground-image"].as<std::vector<std::string>>();
+				return vm["image-file"].as<std::vector<std::string>>();
 			}
-			std::vector<std::string> GetBlendingWeights()
+			std::vector<float> GetBlendingWeights()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				if (!isValid) {
 					throw std::exception("Options are invalid.");
 				}
-				// return backgroundImageFiles;
-				return vm["background-image"].as<std::vector<std::string>>();
+				return vm["blending-weight"].as<std::vector<float>>();
+			}
+
+		private:
+			// std::vector<ImageFileInfo&> imageFileInfos;
+			std::vector<ImageFileInfo> imageFileInfos;
+
+		public:
+			// std::vector<ImageFileInfo&> GetImageFileInfos()
+			std::vector<ImageFileInfo> GetImageFileInfos()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return imageFileInfos;
 			}
 
 		private:

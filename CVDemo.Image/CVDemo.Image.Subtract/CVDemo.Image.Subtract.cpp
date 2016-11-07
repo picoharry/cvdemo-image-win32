@@ -59,9 +59,9 @@ int main(int argc, const char* argv[])
 		//	cerr << "Unrecognised: " << i << endl;
 		//}
 		options.DisplayUnrecognizedArgs(cerr);
-		options.DisplayScaleFactor(cerr);
-		options.DisplayForegroundImageFiles(cerr);
-		options.DisplayBackgroundImageFiles(cerr);
+		options.DisplayResizeAllowed(cerr);
+		options.DisplayImageFileNames(cerr);
+		options.DisplayBlendingWeights(cerr);
 
 		options.DisplayUsageInfo(cerr);
 
@@ -99,7 +99,7 @@ int main(int argc, const char* argv[])
 	//// const char* name = "../../sample-data/lena.jpg";
 	//processImages(name);
 
-	const string filename = options.GetForegroundImageFiles()[0];
+	const string filename = options.GetImageFiles()[0];
 	processImages(filename);
 
 	//destroy GUI windows
