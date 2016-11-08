@@ -1,4 +1,4 @@
-// CVDemo.Image.Subtract.cpp : Defines the entry point for the console application.
+// CVDemo.Image.Diff.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 #include <stdexcept>
 // #include <boost/program_options.hpp>
 #include "CVDemo.Image.ProgramOptions.hpp"
-#include "CVDemo.Image.SubtractProcessor.hpp"
+#include "CVDemo.Image.DiffProcessor.hpp"
 
 using namespace cv;
 using namespace std;
@@ -21,9 +21,9 @@ using namespace cvdemo::image;
 
 int main(int argc, const char* argv[])
 {
-    // testing...
-    string configFile = "../cvdemo.image.subtract.cfg";
-    ProgramOptions options = ProgramOptions(argc, argv, configFile);
+	// testing...
+	string configFile = "../cvdemo.image.diff.cfg";
+	ProgramOptions options = ProgramOptions(argc, argv, configFile);
 
 	if (options.IsForUsageInfo()) {
 		options.DisplayUsageInfo(cout);
@@ -41,7 +41,7 @@ int main(int argc, const char* argv[])
 		return -1;
 	}
 
-	if (! options.IsValid()) {
+	if (!options.IsValid()) {
 		cerr << ">>> Invalid input options." << endl;
 
 		//vector<string> unrecognized = options.GetUnrecognizedArgs();
@@ -51,7 +51,7 @@ int main(int argc, const char* argv[])
 		options.DisplayUnrecognizedArgs(cerr);
 		options.DisplayResizeAllowed(cerr);
 		options.DisplayForegroundImageFiles(cerr);
-		// options.DisplayBackgroundImageFiles(cerr);
+		options.DisplayBackgroundImageFiles(cerr);
 
 		options.DisplayUsageInfo(cerr);
 
@@ -59,10 +59,8 @@ int main(int argc, const char* argv[])
 		return -1;
 	}
 
-
-	// Main routine.
-	if (SubtractProcessor::processImages(options.GetForegroundImageFiles())) {
-		cerr << "Unable to process all image files." << endl;
+	if (DiffProcessor::processImages(options.GetForegroundImageFiles(), options.GetBackgroundImageFiles())) {
+		cerr << "Unable to process all foreground image files." << endl;
 		exit(EXIT_FAILURE);
 	}
 

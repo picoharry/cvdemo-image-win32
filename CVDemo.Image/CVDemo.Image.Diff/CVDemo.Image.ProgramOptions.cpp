@@ -43,8 +43,10 @@ namespace cvdemo
 			po::options_description config("Configuration");
 			config.add_options()
 				// Why is the value type vector<string>, not string?????
+				//("foreground-image,F", po::value<string>()->multitoken(), "Foreground image file")
+				//("background-image,B", po::value<string>()->multitoken(), "Background image file")
 				("foreground-image,F", po::value<vector<string>>()->multitoken(), "Foreground image file")
-				// ("background-image,B", po::value<vector<string>>()->multitoken(), "Background image file")
+				("background-image,B", po::value<vector<string>>()->multitoken(), "Background image file")
 				;
 
 			// Hidden options, will be allowed both on command line and
@@ -64,7 +66,7 @@ namespace cvdemo
 		void ProgramOptions::_Parse()
 		{
 			// ???
-		    // po::store(po::command_line_parser(cmdlineArgc, cmdlineArgv).options(cmdline_options).run(), vm);
+			// po::store(po::command_line_parser(cmdlineArgc, cmdlineArgv).options(cmdline_options).run(), vm);
 			try {
 				// po::store(po::parse_command_line(cmdlineArgc, cmdlineArgv, cmdline_options), vm);
 				// Ignore unknown options???
@@ -97,7 +99,7 @@ namespace cvdemo
 					// cerr << "Parsing config file: " << configFilePath << "..." << endl;
 					// temporary
 					po::parsed_options configParsed = po::parse_config_file<char>(configFilePath.c_str(), config_file_options, true);  // allow_unregistered == true.
-					// po::store(configParsed, vm, true);
+																																	   // po::store(configParsed, vm, true);
 					po::store(configParsed, vm, false);   // ???
 				}
 				catch (const exception& e) {   // ignore
@@ -134,8 +136,7 @@ namespace cvdemo
 
 			isParsed = true;
 			// Required params.
-			// if (vm.count("foreground-image") && vm.count("background-image")) {
-			if (vm.count("foreground-image")) {
+			if (vm.count("foreground-image") && vm.count("background-image")) {
 				isValid = true;
 			}
 			else {

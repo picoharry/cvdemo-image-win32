@@ -28,7 +28,7 @@ namespace cvdemo
 			bool isForUsageInfo = false;
 			bool isForVersionInfo = false;
 			bool isForOptionsDisplay = false;   // true == like "echo" for options.
-			// These flags make sense only if isParsed == true.
+												// These flags make sense only if isParsed == true.
 			bool hasSyntacticError = false;
 			bool isValid = false;
 		public:
@@ -49,7 +49,7 @@ namespace cvdemo
 			}
 			bool IsForUsageInfo()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				return isForUsageInfo;
@@ -124,13 +124,13 @@ namespace cvdemo
 					os << "Foreground file: " << i << std::endl;
 				}
 
-				//std::vector<std::string> bgFiles;
-				//if (vm.count("background-image")) {
-				//	bgFiles = vm["background-image"].as<std::vector<std::string>>();
-				//}
-				//for (auto &i : bgFiles) {
-				//	os << "Background file: " << i << std::endl;
-				//}
+				std::vector<std::string> bgFiles;
+				if (vm.count("background-image")) {
+					bgFiles = vm["background-image"].as<std::vector<std::string>>();
+				}
+				for (auto &i : bgFiles) {
+					os << "Background file: " << i << std::endl;
+				}
 
 			}
 			std::vector<std::string> GetUnrecognizedArgs()
@@ -165,26 +165,26 @@ namespace cvdemo
 					os << "Foreground file: " << i << std::endl;
 				}
 			}
-			//void DisplayBackgroundImageFiles(std::ostream& os)
-			//{
-			//	// std::vector<std::string> files = GetBackgroundImageFiles();
-			//	std::vector<std::string> bgFiles;
-			//	if (vm.count("background-image")) {
-			//		bgFiles = vm["background-image"].as<std::vector<std::string>>();
-			//	}
-			//	for (auto &i : bgFiles) {
-			//		os << "Background file: " << i << std::endl;
-			//	}
-			//}
+			void DisplayBackgroundImageFiles(std::ostream& os)
+			{
+				// std::vector<std::string> files = GetBackgroundImageFiles();
+				std::vector<std::string> bgFiles;
+				if (vm.count("background-image")) {
+					bgFiles = vm["background-image"].as<std::vector<std::string>>();
+				}
+				for (auto &i : bgFiles) {
+					os << "Background file: " << i << std::endl;
+				}
+			}
 
-		//private:
-		//	// float scaleFactor = 1.0f;
-		//	// std::vector<std::string> foregroundImageFiles;
-		//	// std::vector<std::string> backgroundImageFiles;
+			//private:
+			//	// float scaleFactor = 1.0f;
+			//	// std::vector<std::string> foregroundImageFiles;
+			//	// std::vector<std::string> backgroundImageFiles;
 		public:
 			float IsResizeAllowed()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				if (!isValid) {
@@ -195,7 +195,7 @@ namespace cvdemo
 			}
 			std::vector<std::string> GetForegroundImageFiles()
 			{
-				if (! isParsed) {
+				if (!isParsed) {
 					_Parse();
 				}
 				if (!isValid) {
@@ -204,17 +204,17 @@ namespace cvdemo
 				// return foregroundImageFiles;
 				return vm["foreground-image"].as<std::vector<std::string>>();
 			}
-			//std::vector<std::string> GetBackgroundImageFiles()
-			//{
-			//	if (! isParsed) {
-			//		_Parse();
-			//	}
-			//	if (!isValid) {
-			//		throw std::exception("Options are invalid.");
-			//	}
-			//	// return backgroundImageFiles;
-			//	return vm["background-image"].as<std::vector<std::string>>();
-			//}
+			std::vector<std::string> GetBackgroundImageFiles()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				// return backgroundImageFiles;
+				return vm["background-image"].as<std::vector<std::string>>();
+			}
 
 		private:
 			po::variables_map vm;

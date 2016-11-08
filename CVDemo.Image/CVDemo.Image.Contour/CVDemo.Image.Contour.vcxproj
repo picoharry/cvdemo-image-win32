@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5CA330FF-E2F0-422B-A559-98A6C2A022D9}</ProjectGuid>
+    <ProjectGuid>{C4B13400-C2D5-4175-B056-A559D755EAEC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CVDemoImageSubtract</RootNamespace>
+    <RootNamespace>CVDemoImageContour</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -145,15 +145,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CVDemo.Image.ProgramOptions.hpp" />
-    <ClInclude Include="CVDemo.Image.SubtractProcessor.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CVDemo.Image.ProgramOptions.cpp" />
-    <ClCompile Include="CVDemo.Image.Subtract.cpp" />
-    <ClCompile Include="CVDemo.Image.SubtractProcessor.cpp" />
+    <ClCompile Include="CVDemo.Image.Contour.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

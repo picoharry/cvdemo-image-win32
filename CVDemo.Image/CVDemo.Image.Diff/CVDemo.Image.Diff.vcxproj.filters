@@ -27,7 +27,7 @@
     <ClInclude Include="CVDemo.Image.ProgramOptions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CVDemo.Image.SubtractProcessor.hpp">
+    <ClInclude Include="CVDemo.Image.DiffProcessor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,13 +35,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CVDemo.Image.Subtract.cpp">
+    <ClCompile Include="CVDemo.Image.Diff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CVDemo.Image.ProgramOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CVDemo.Image.SubtractProcessor.cpp">
+    <ClCompile Include="CVDemo.Image.DiffProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
