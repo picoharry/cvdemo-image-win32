@@ -14,6 +14,11 @@ Resizes a given image.
 Creates a new image from an area in a larger image.
 
 
+## Image.Contour
+
+Finds the largest contour that includes the central part of the image.
+
+
 ## Image.Split
 
 Splits a large image into a set of multiple image fragments.
@@ -47,6 +52,11 @@ Blends images into a single large image.
 ## Image.Overlay
 
 Combines two or more images into one by overlapping them.
+
+
+## Image.Diff
+
+Removes background image from the foreground image.
 
 
 ## Image.Subtract
