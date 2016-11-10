@@ -47,9 +47,9 @@ namespace cvdemo
 				//("background-image-file,B", po::value<vector<string>>()->multitoken(), "Background image file")
 				("foreground-image-file,F", po::value<string>(), "Foreground image file")
 				("background-image-file,B", po::value<string>(), "Background image file")
-				("foreground-image-folder,FF", po::value<string>(), "Foreground image folder")
-				("background-image-folder,BF", po::value<string>(), "Background image folder")
-				("output-image-folder,OF", po::value<string>(), "Output image folder")
+				("foreground-image-folder,R", po::value<string>(), "Foreground image folder")
+				("background-image-folder,K", po::value<string>(), "Background image folder")
+				("output-image-folder,P", po::value<string>(), "Output image folder")
 				;
 
 			// Hidden options, will be allowed both on command line and

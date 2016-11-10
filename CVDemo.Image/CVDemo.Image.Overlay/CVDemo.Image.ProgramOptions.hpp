@@ -119,21 +119,21 @@ namespace cvdemo
 				os << "Output image type is set to " << vm["output-image-type"].as<std::string>() << "." << std::endl;
 
 				if (vm.count("foreground-image-file")) {
-					os << "Foreground image file: " << vm.count("foreground-image-file") << std::endl;
+					os << "Foreground image file: " << vm["foreground-image-file"].as<std::string>() << std::endl;
 				}
 				if (vm.count("foreground-image-folder")) {
-					os << "Foreground image folder: " << vm.count("foreground-image-folder") << std::endl;
+					os << "Foreground image folder: " << vm["foreground-image-folder"].as<std::string>() << std::endl;
 				}
 
 				if (vm.count("background-image-file")) {
-					os << "Background image file: " << vm.count("background-image-file") << std::endl;
+					os << "Background image file: " << vm["background-image-file"].as<std::string>() << std::endl;
 				}
 				if (vm.count("background-image-folder")) {
-					os << "Background image folder: " << vm.count("background-image-folder") << std::endl;
+					os << "Background image folder: " << vm["background-image-folder"].as<std::string>() << std::endl;
 				}
 
 				if (vm.count("output-image-folder")) {
-					os << "Output image folder: " << vm.count("output-image-folder") << std::endl;
+					os << "Output image folder: " << vm["output-image-folder"].as<std::string>() << std::endl;
 				}
 
 			}
@@ -161,33 +161,33 @@ namespace cvdemo
 			void DisplayForegroundImageFile(std::ostream& os)
 			{
 				if (vm.count("foreground-image-file")) {
-					os << "Foreground image file: " << vm.count("foreground-image-file") << std::endl;
+					os << "Foreground image file: " << vm["foreground-image-file"].as<std::string>() << std::endl;
 				}
 			}
 			void DisplayForegroundImageFolder(std::ostream& os)
 			{
 				if (vm.count("foreground-image-folder")) {
-					os << "Foreground image folder: " << vm.count("foreground-image-folder") << std::endl;
+					os << "Foreground image folder: " << vm["foreground-image-folder"].as<std::string>() << std::endl;
 				}
 			}
 
 			void DisplayBackgroundImageFile(std::ostream& os)
 			{
 				if (vm.count("background-image-file")) {
-					os << "Background image file: " << vm.count("background-image-file") << std::endl;
+					os << "Background image file: " << vm["background-image-file"].as<std::string>() << std::endl;
 				}
 			}
 			void DisplayBackgroundImageFolder(std::ostream& os)
 			{
 				if (vm.count("background-image-folder")) {
-					os << "Background image folder: " << vm.count("background-image-folder") << std::endl;
+					os << "Background image folder: " << vm["background-image-folder"].as<std::string>() << std::endl;
 				}
 			}
 
 			void DisplayOutputImageFolder(std::ostream& os)
 			{
 				if (vm.count("output-image-folder")) {
-					os << "Output image folder: " << vm.count("output-image-folder") << std::endl;
+					os << "Output image folder: " << vm["output-image-folder"].as<std::string>() << std::endl;
 				}
 			}
 
@@ -251,7 +251,7 @@ namespace cvdemo
 				if (!isValid) {
 					throw std::exception("Options are invalid.");
 				}
-				return vm["output-image-folder"].as<std::string>();
+				return (vm.count("output-image-folder") > 0) ? vm["output-image-folder"].as<std::string>() : "";
 			}
 
 		private:

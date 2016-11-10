@@ -19,6 +19,28 @@ using namespace cvdemo::image;
 // namespace po = boost::program_options;
 
 
+// temporary
+#include <Windows.h>
+vector<string> get_all_file_names_within_folder(string folder)
+{
+	vector<string> names;
+	string search_path = folder + "/*.*";
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile((LPCWSTR) search_path.c_str(), &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// read all (real) files in current folder
+			// , delete '!' read other 2 default folder . and ..
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				names.push_back(fd.cFileName);
+			}
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+	return names;
+}
+
+
 int main(int argc, const char* argv[])
 {
 	// testing...
@@ -62,9 +84,22 @@ int main(int argc, const char* argv[])
 		OverlayProcessor::overlayImages(options.GetForegroundImageFile(), options.GetBackgroundImageFile(), options.GetOutputImageFolder());
 	}
 	else {
-		// tbd ...
+		if (options.GetForegroundImageFolder() != "" && options.GetBackgroundImageFile() != "") {
+			auto fgFolder = options.GetForegroundImageFolder();
+			vector<string> fgFiles = get_all_file_names_within_folder(fgFolder);
+			OverlayProcessor::overlayImages(fgFiles, options.GetBackgroundImageFile(), options.GetOutputImageFolder());
+		}
+		else if (options.GetForegroundImageFile() != "" && options.GetBackgroundImageFolder() != "") {
+			auto bgFolder = options.GetBackgroundImageFolder();
+			vector<string> bgFiles = get_all_file_names_within_folder(bgFolder);
+			OverlayProcessor::overlayImages(options.GetForegroundImageFile(), bgFiles, options.GetOutputImageFolder());
+		}
+		else {
+			// ????
+		}
 	}
 
+	system("pause");
 	return EXIT_SUCCESS;
 }
 
