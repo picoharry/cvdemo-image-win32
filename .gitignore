@@ -8,6 +8,7 @@ cvdemo.image.crop.cfg
 cvdemo.image.join.cfg
 cvdemo.image.mosaic.cfg
 cvdemo.image.overlay.cfg
+cvdemo.image.stack.cfg
 cvdemo.image.split.cfg
 cvdemo.image.spotlight.cfg
 

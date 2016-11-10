@@ -150,7 +150,7 @@ namespace cvdemo
 					os << "Unrecognized: " << i << std::endl;
 				}
 			}
-			void DisplayResizeAllowed(std::ostream& os)
+			void DisplayScaleFactor(std::ostream& os)
 			{
 				os << "Scale factor is set to " << vm["scale-factor"].as<float>() << "." << std::endl;
 			}
@@ -182,7 +182,7 @@ namespace cvdemo
 			//	// std::vector<std::string> foregroundImageFiles;
 			//	// std::vector<std::string> backgroundImageFiles;
 		public:
-			float IsResizeAllowed()
+			float GetScaleFactor()
 			{
 				if (!isParsed) {
 					_Parse();

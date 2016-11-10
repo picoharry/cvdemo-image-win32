@@ -2,9 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/videoio.hpp"
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
 #include <stdio.h>
 #include <sstream>
@@ -49,7 +49,7 @@ int main(int argc, const char* argv[])
 		//	cerr << "Unrecognised: " << i << endl;
 		//}
 		options.DisplayUnrecognizedArgs(cerr);
-		options.DisplayResizeAllowed(cerr);
+		options.DisplayScaleFactor(cerr);
 		options.DisplayForegroundImageFiles(cerr);
 		options.DisplayBackgroundImageFiles(cerr);
 
