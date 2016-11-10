@@ -41,15 +41,20 @@ Joins multiple images into a single image by overlapping them in random/specifie
 
 ## Image.Blend
 
-Blends images into a single large image.
+Blends multiple images into a single image with weights.
 
 
 ## Image.Panorama
 
-Blends images into a single large image.
+Stitches images into a single large image.
 
 
 ## Image.Overlay
+
+Overlays a foregound image on top of a background image with the same size.
+
+
+## Image.Stack
 
 Combines two or more images into one by overlapping them.
 
