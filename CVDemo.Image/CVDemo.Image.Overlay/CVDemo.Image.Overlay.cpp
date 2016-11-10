@@ -13,6 +13,10 @@
 #include "CVDemo.Image.ProgramOptions.hpp"
 #include "CVDemo.Image.OverlayProcessor.hpp"
 
+// temporary
+#include <Windows.h>
+
+
 using namespace cv;
 using namespace std;
 using namespace cvdemo::image;
@@ -20,19 +24,18 @@ using namespace cvdemo::image;
 
 
 // temporary
-#include <Windows.h>
 vector<string> get_all_file_names_within_folder(string folder)
 {
 	vector<string> names;
-	string search_path = folder + "/*.*";
+	string search_path = folder + "/*.png";
 	WIN32_FIND_DATA fd;
-	HANDLE hFind = ::FindFirstFile((LPCWSTR) search_path.c_str(), &fd);
+	HANDLE hFind = ::FindFirstFile((LPCWSTR) search_path.c_str(), &fd);   // ????
 	if (hFind != INVALID_HANDLE_VALUE) {
 		do {
 			// read all (real) files in current folder
 			// , delete '!' read other 2 default folder . and ..
 			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-				names.push_back(fd.cFileName);
+				names.push_back((LPCSTR) fd.cFileName);   // ????
 			}
 		} while (::FindNextFile(hFind, &fd));
 		::FindClose(hFind);
