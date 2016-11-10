@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <stdexcept>
 #include <opencv2/imgcodecs.hpp>
 #include "CVDemo.Image.OverlayProcessor.hpp"
 
@@ -81,6 +82,10 @@ namespace cvdemo
 			return 0;
 		}
 
+		// Note:
+		// For our use case,
+		// fgFrame and bgFrame are exactly the same size (tbd: it can be generalized...)
+		// Both fgFrame and bgFrame should have alpha channels (meaning we only support PNG files at this point?).
 		Mat OverlayProcessor::overlayImage(const Mat fgFrame, const Mat bgFrame)
 		{
 			//Mat overlaidFrame;
@@ -97,9 +102,15 @@ namespace cvdemo
 					if (opacity > 0.0) {
 						for (int c = 0; c < overlaidFrame.channels(); ++c)
 						{
-							auto overlayPx = fgFrame.data[y * fgFrame.step + x * fgFrame.channels() + c];
-							auto srcPx = overlaidFrame.data[y * fgFrame.step + x * fgFrame.channels() + c];
-							overlaidFrame.data[y * overlaidFrame.step + overlaidFrame.channels() * x + c] = srcPx * (1. - opacity) + overlayPx * opacity;
+							try {
+								auto overlayPx = fgFrame.data[y * fgFrame.step + x * fgFrame.channels() + c];
+								auto srcPx = overlaidFrame.data[y * fgFrame.step + x * fgFrame.channels() + c];
+								overlaidFrame.data[y * overlaidFrame.step + overlaidFrame.channels() * x + c] = srcPx * (1. - opacity) + overlayPx * opacity;
+							}
+							catch (const std::exception& ex) {
+								// ignore..
+								cerr << "Failed to set the pixel data on overlaidFrame. y=" << y << ", x=" << x << ", c=" << c << "; Error = " << ex.what() << endl;
+							}
 						}
 					}
 				}
