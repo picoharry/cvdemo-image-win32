@@ -5,12 +5,16 @@ cvdemo.image.overlay.cfg
 cvdemo.image.blend.cfg
 cvdemo.image.collage.cfg
 cvdemo.image.crop.cfg
+cvdemo.image.diff.cfg
 cvdemo.image.join.cfg
 cvdemo.image.mosaic.cfg
 cvdemo.image.overlay.cfg
 cvdemo.image.stack.cfg
 cvdemo.image.split.cfg
 cvdemo.image.spotlight.cfg
+cvdemo.image.contour.cfg
+cvdemo.image.boxes.cfg
+cvdemo.image.lines.cfg
 
 
 ## Ignore Visual Studio temporary files, build results, and

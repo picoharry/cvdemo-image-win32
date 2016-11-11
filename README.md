@@ -19,6 +19,16 @@ Creates a new image from an area in a larger image.
 Finds the largest contour that includes the central part of the image.
 
 
+## Image.Boxes
+
+Finds all bounding boxes in the image.
+
+
+## Image.Lines
+
+Finds all lines (edges and corners) in the image.
+
+
 ## Image.Split
 
 Splits a large image into a set of multiple image fragments.
