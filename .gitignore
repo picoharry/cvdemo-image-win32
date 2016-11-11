@@ -15,6 +15,7 @@ cvdemo.image.spotlight.cfg
 cvdemo.image.contour.cfg
 cvdemo.image.boxes.cfg
 cvdemo.image.lines.cfg
+cvdemo.image.find.cfg
 
 
 ## Ignore Visual Studio temporary files, build results, and

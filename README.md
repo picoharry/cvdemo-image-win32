@@ -26,7 +26,7 @@ Finds all bounding boxes in the image.
 
 ## Image.Lines
 
-Finds all lines (edges and corners) in the image.
+Finds all lines (and, edges and corners) in the image.
 
 
 ## Image.Split
@@ -82,6 +82,11 @@ Removes background image and gets the foreground object.
 ## Image.Spotlight
 
 Highlights a part of an image.
+
+
+## Image.Find
+
+Finds a region of an image that matches a given template.
 
 
 
