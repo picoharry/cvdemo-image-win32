@@ -15,7 +15,9 @@ namespace cvdemo
 		class ProgramOptions
 		{
 		public:
+			ProgramOptions() {}
 			ProgramOptions(int argc, const char* argv[], std::string configFile = "");
+			void operator=(ProgramOptions const&);
 
 		private:
 			int cmdlineArgc;
@@ -136,6 +138,16 @@ namespace cvdemo
 					os << "Output image folder: " << vm["output-image-folder"].as<std::string>() << std::endl;
 				}
 
+				if (vm.count("blending-weight-alpha")) {
+					os << "Foreground mask blending weight, alpha: " << vm["blending-weight-alpha"].as<float>() << std::endl;
+				}
+				if (vm.count("blending-weight-beta")) {
+					os << "Background image blending weight, beta: " << vm["blending-weight-beta"].as<float>() << std::endl;
+				}
+				if (vm.count("blending-weight-gamma")) {
+					os << "Extra blending weight, gamma: " << vm["blending-weight-gamma"].as<float>() << std::endl;
+				}
+
 			}
 			std::vector<std::string> GetUnrecognizedArgs()
 			{
@@ -191,6 +203,24 @@ namespace cvdemo
 				}
 			}
 
+			void DisplayBlendingWeightAlpha(std::ostream& os)
+			{
+				if (vm.count("blending-weight-alpha")) {
+					os << "Foreground mask blending weight, alpha: " << vm["blending-weight-alpha"].as<float>() << std::endl;
+				}
+			}
+			void DisplayBlendingWeightBeta(std::ostream& os)
+			{
+				if (vm.count("blending-weight-beta")) {
+					os << "Foreground mask blending weight, beta: " << vm["blending-weight-beta"].as<float>() << std::endl;
+				}
+			}
+			void DisplayBlendingWeightGamma(std::ostream& os)
+			{
+				if (vm.count("blending-weight-gamma")) {
+					os << "Foreground mask blending weight, gamma: " << vm["blending-weight-gamma"].as<float>() << std::endl;
+				}
+			}
 
 		public:
 			std::string GetOutputImageType()
@@ -252,6 +282,37 @@ namespace cvdemo
 					throw std::exception("Options are invalid.");
 				}
 				return (vm.count("output-image-folder") > 0) ? vm["output-image-folder"].as<std::string>() : "";
+			}
+
+			float GetBlendingWeightAlpha()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return (vm.count("blending-weight-alpha") > 0) ? vm["blending-weight-alpha"].as<float>() : 0.0f;
+			}
+			float GetBlendingWeightBeta()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return (vm.count("blending-weight-beta") > 0) ? vm["blending-weight-beta"].as<float>() : 0.0f;
+			}
+			float GetBlendingWeightGamma()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return (vm.count("blending-weight-gamma") > 0) ? vm["blending-weight-gamma"].as<float>() : 0.0f;
 			}
 
 		private:

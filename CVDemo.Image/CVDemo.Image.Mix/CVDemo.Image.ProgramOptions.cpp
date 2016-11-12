@@ -26,6 +26,17 @@ namespace cvdemo
 		{
 			_Initialize();
 		}
+		void ProgramOptions::operator=(ProgramOptions const&)
+		{
+			//???
+			isParsed = false;
+			isForUsageInfo = false;
+			isForVersionInfo = false;
+			isForOptionsDisplay = false;
+			hasSyntacticError = false;
+			isValid = false;
+			_Initialize();
+		}
 		void ProgramOptions::_Initialize()
 		{
 			// Declare a group of options that will be 
@@ -45,11 +56,14 @@ namespace cvdemo
 				// Why is the value type vector<string>, not string?????
 				//("foreground-image-file,F", po::value<vector<string>>()->multitoken(), "Foreground image file")
 				//("background-image-file,B", po::value<vector<string>>()->multitoken(), "Background image file")
-				("foreground-image-file,F", po::value<string>(), "Foreground image file")
+				("foreground-image-file,F", po::value<string>(), "Foreground mask file")
 				("background-image-file,B", po::value<string>(), "Background image file")
-				("foreground-image-folder,R", po::value<string>(), "Foreground image folder")
+				("foreground-image-folder,R", po::value<string>(), "Foreground mask image folder")
 				("background-image-folder,K", po::value<string>(), "Background image folder")
 				("output-image-folder,P", po::value<string>(), "Output image folder")
+				("blending-weight-alpha,A", po::value<float>()->default_value(0.0f), "Foreground mask blending weight, alpha")
+				("blending-weight-beta,T", po::value<float>()->default_value(1.0f), "Backgournd image blending weight, beta")
+				("blending-weight-gamma,G", po::value<float>()->default_value(0.0f), "Extra blending weight, gamma")
 				;
 
 			// Hidden options, will be allowed both on command line and
@@ -58,7 +72,6 @@ namespace cvdemo
 			hidden.add_options()
 				("output-image-type,t", po::value<string>()->default_value(""), "Output image type (default: png)")
 				;
-
 
 			cmdline_options.add(generic).add(config).add(hidden);
 			config_file_options.add(config).add(hidden);
@@ -114,7 +127,6 @@ namespace cvdemo
 			}
 			// ???
 			po::notify(vm);
-
 
 
 			if (vm.count("help")) {

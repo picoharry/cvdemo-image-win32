@@ -30,6 +30,9 @@
     <ClInclude Include="CVDemo.Image.ProgramOptions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CVDemo.Image.ProgramOptionsHelper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

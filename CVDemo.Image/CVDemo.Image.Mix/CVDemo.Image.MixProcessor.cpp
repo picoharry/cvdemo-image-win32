@@ -6,6 +6,8 @@
 #include <vector>
 #include <stdexcept>
 #include <opencv2/imgcodecs.hpp>
+#include "CVDemo.Image.ProgramOptions.hpp"
+#include "CVDemo.Image.ProgramOptionsHelper.hpp"
 #include "CVDemo.Image.MixProcessor.hpp"
 
 using namespace cv;
@@ -88,33 +90,14 @@ namespace cvdemo
 		// Both fgFrame and bgFrame should have alpha channels (meaning we only support PNG files at this point?).
 		Mat MixProcessor::mixImage(const Mat fgFrame, const Mat bgFrame)
 		{
-			//Mat overlaidFrame;
-			//auto alpha = 0.5;
-			//auto beta = 0.5;
-			//auto gamma = 0.5;
-			//addWeighted(fgFrame, alpha, bgFrame, beta, gamma, overlaidFrame);
+			ProgramOptions options = ProgramOptionsHelper::getInstance().getProgramOptions();
+			auto alpha = options.GetBlendingWeightAlpha();
+			auto beta = options.GetBlendingWeightBeta();
+			auto gamma = options.GetBlendingWeightGamma();
 
 			Mat overlaidFrame;
-			bgFrame.copyTo(overlaidFrame);
-			for (auto y = 0; y < overlaidFrame.rows; y++) {
-				for (auto x = 0; x < overlaidFrame.cols; x++) {
-					auto opacity = ((double)fgFrame.data[y * fgFrame.step + x * fgFrame.channels() + 3]) / 255;
-					if (opacity > 0.0) {
-						for (int c = 0; c < overlaidFrame.channels(); ++c)
-						{
-							try {
-								auto mixPx = fgFrame.data[y * fgFrame.step + x * fgFrame.channels() + c];
-								auto srcPx = overlaidFrame.data[y * fgFrame.step + x * fgFrame.channels() + c];
-								overlaidFrame.data[y * overlaidFrame.step + overlaidFrame.channels() * x + c] = srcPx * (1. - opacity) + mixPx * opacity;
-							}
-							catch (const std::exception& ex) {
-								// ignore..
-								cerr << "Failed to set the pixel data on overlaidFrame. y=" << y << ", x=" << x << ", c=" << c << "; Error = " << ex.what() << endl;
-							}
-						}
-					}
-				}
-			}
+			addWeighted(fgFrame, alpha, bgFrame, beta, gamma, overlaidFrame);
+
 
 			// For debugging.
 			// imshow("Foreground Frame", fgFrame);

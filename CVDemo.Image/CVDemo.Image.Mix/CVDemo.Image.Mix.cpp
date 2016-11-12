@@ -12,6 +12,7 @@
 // #include <boost/program_options.hpp>
 // #include <boost/filesystem.hpp>
 #include "CVDemo.Image.ProgramOptions.hpp"
+#include "CVDemo.Image.ProgramOptionsHelper.hpp"
 #include "CVDemo.Image.MixProcessor.hpp"
 
 // temporary
@@ -62,7 +63,9 @@ int main(int argc, const char* argv[])
 {
 	// testing...
 	string configFile = "../cvdemo.image.mix.cfg";
-	ProgramOptions options = ProgramOptions(argc, argv, configFile);
+	// ProgramOptions options = ProgramOptions(argc, argv, configFile);
+	ProgramOptionsHelper::getInstance().initialize(argc, argv, configFile);
+	ProgramOptions options = ProgramOptionsHelper::getInstance().getProgramOptions();
 
 	if (options.IsForUsageInfo()) {
 		options.DisplayUsageInfo(cout);

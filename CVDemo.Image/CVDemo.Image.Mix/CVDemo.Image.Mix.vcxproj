@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="CVDemo.Image.MixProcessor.hpp" />
     <ClInclude Include="CVDemo.Image.ProgramOptions.hpp" />
+    <ClInclude Include="CVDemo.Image.ProgramOptionsHelper.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
