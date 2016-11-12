@@ -9,6 +9,11 @@ _TBD_
 Resizes a given image.
 
 
+## Image.Transform
+
+Applies an affine transform to an image (rotate, resize, and translate).
+
+
 ## Image.Crop
 
 Creates a new image from an area in a larger image.
