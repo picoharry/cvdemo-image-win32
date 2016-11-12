@@ -14,6 +14,21 @@ Resizes a given image.
 Applies an affine transform to an image (rotate, resize, and translate).
 
 
+## Image.Blur
+
+Blurs a given image.
+
+
+## Image.Sharpen
+
+Increases the contrast in a given image.
+
+
+## Image.Random
+
+Creates a random image (with alpha channels).
+
+
 ## Image.Crop
 
 Creates a new image from an area in a larger image.
