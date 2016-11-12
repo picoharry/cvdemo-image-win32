@@ -74,6 +74,11 @@ Joins multiple images into a single image by overlapping them in random/specifie
 Blends multiple images into a single image with weights.
 
 
+## Image.Mix
+
+Blends a foregound image with a background image with the same size.
+
+
 ## Image.Panorama
 
 Stitches images into a single large image.

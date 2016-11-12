@@ -16,6 +16,11 @@ cvdemo.image.contour.cfg
 cvdemo.image.boxes.cfg
 cvdemo.image.lines.cfg
 cvdemo.image.find.cfg
+cvdemo.image.blur.cfg
+cvdemo.image.sharpen.cfg
+cvdemo.image.mix.cfg
+cvdemo.image.random.cfg
+cvdemo.image.transform.cfg
 
 
 ## Ignore Visual Studio temporary files, build results, and
