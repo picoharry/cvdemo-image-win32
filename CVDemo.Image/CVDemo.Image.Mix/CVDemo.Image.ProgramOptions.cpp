@@ -26,7 +26,15 @@ namespace cvdemo
 		{
 			_Initialize();
 		}
-		void ProgramOptions::operator=(ProgramOptions const&)
+		void ProgramOptions::operator=(ProgramOptions const& options)
+		{
+			//???
+			cmdlineArgc = options.cmdlineArgc;
+			cmdlineArgv = options.cmdlineArgv;
+			configFilePath = options.configFilePath;
+			_Initialize();
+		}
+		void ProgramOptions::_Initialize()
 		{
 			//???
 			isParsed = false;
@@ -35,10 +43,7 @@ namespace cvdemo
 			isForOptionsDisplay = false;
 			hasSyntacticError = false;
 			isValid = false;
-			_Initialize();
-		}
-		void ProgramOptions::_Initialize()
-		{
+
 			// Declare a group of options that will be 
 			// allowed only on command line
 			po::options_description generic("Generic options");

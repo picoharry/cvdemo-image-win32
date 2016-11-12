@@ -32,7 +32,7 @@ namespace cvdemo
 			{
 				options = ProgramOptions(argc, argv, configFile);
 			}
-			ProgramOptions getProgramOptions()
+			ProgramOptions& getProgramOptions()
 			{
 				return options;
 			}

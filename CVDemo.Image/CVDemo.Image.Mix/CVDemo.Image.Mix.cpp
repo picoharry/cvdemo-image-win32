@@ -65,7 +65,7 @@ int main(int argc, const char* argv[])
 	string configFile = "../cvdemo.image.mix.cfg";
 	// ProgramOptions options = ProgramOptions(argc, argv, configFile);
 	ProgramOptionsHelper::getInstance().initialize(argc, argv, configFile);
-	ProgramOptions options = ProgramOptionsHelper::getInstance().getProgramOptions();
+	ProgramOptions& options = ProgramOptionsHelper::getInstance().getProgramOptions();
 
 	if (options.IsForUsageInfo()) {
 		options.DisplayUsageInfo(cout);
