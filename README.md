@@ -114,6 +114,10 @@ Highlights a part of an image.
 Finds a region of an image that matches a given template.
 
 
+## Image.Face
+
+Face detection demo.
+
 
 
 
