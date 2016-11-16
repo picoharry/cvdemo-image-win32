@@ -145,10 +145,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CVDemo.Image.ProgramOptions.hpp" />
+    <ClInclude Include="CVDemo.Image.ProgramOptionsHelper.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CVDemo.Image.ProgramOptions.cpp" />
     <ClCompile Include="CVDemo.Image.Random.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
