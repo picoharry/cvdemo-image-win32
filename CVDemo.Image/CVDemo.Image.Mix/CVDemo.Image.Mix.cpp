@@ -11,6 +11,7 @@
 #include <stdexcept>
 // #include <boost/program_options.hpp>
 // #include <boost/filesystem.hpp>
+#include "CVDemo.Image.FileSystemHelper.hpp"
 #include "CVDemo.Image.ProgramOptions.hpp"
 #include "CVDemo.Image.ProgramOptionsHelper.hpp"
 #include "CVDemo.Image.MixProcessor.hpp"
@@ -26,7 +27,7 @@ using namespace cvdemo::image;
 // using namespace boost::filesystem;
 
 
-// temporary
+// To be deleted.
 vector<string> get_all_file_names_within_folder(string folder)
 {
 	vector<string> names;
@@ -106,12 +107,14 @@ int main(int argc, const char* argv[])
 	else {
 		if (options.GetForegroundImageFolder() != "" && options.GetBackgroundImageFile() != "") {
 			auto fgFolder = options.GetForegroundImageFolder();
-			vector<string> fgFiles = get_all_file_names_within_folder(fgFolder);
+			// vector<string> fgFiles = get_all_file_names_within_folder(fgFolder);
+			vector<string> fgFiles = FileSystemHelper::findFiles(fgFolder);
 			MixProcessor::mixImages(fgFiles, options.GetBackgroundImageFile(), options.GetOutputImageFolder());
 		}
 		else if (options.GetForegroundImageFile() != "" && options.GetBackgroundImageFolder() != "") {
 			auto bgFolder = options.GetBackgroundImageFolder();
-			vector<string> bgFiles = get_all_file_names_within_folder(bgFolder);
+			// vector<string> bgFiles = get_all_file_names_within_folder(bgFolder);
+			vector<string> bgFiles = FileSystemHelper::findFiles(bgFolder);
 			MixProcessor::mixImages(options.GetForegroundImageFile(), bgFiles, options.GetOutputImageFolder());
 		}
 		else {
