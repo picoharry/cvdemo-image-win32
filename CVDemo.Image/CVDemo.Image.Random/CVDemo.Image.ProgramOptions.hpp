@@ -30,7 +30,7 @@ namespace cvdemo
 			bool isForUsageInfo = false;
 			bool isForVersionInfo = false;
 			bool isForOptionsDisplay = false;   // true == like "echo" for options.
-												// These flags make sense only if isParsed == true.
+			// These flags make sense only if isParsed == true.
 			bool hasSyntacticError = false;
 			bool isValid = false;
 		public:
@@ -120,6 +120,11 @@ namespace cvdemo
 				// empty string means use thee default type (e.g., "png") ???
 				os << "Output image type is set to " << vm["output-image-type"].as<std::string>() << "." << std::endl;
 
+				if (vm.count("image-size")) {
+					// os << "Image size: " << vm["image-size"].as<std::string>() << std::endl;
+					os << "Image size: " << imageSize << std::endl;
+				}
+
 				if (vm.count("output-image-folder")) {
 					os << "Output image folder: " << vm["output-image-folder"].as<std::string>() << std::endl;
 				}
@@ -158,6 +163,14 @@ namespace cvdemo
 			void DisplayOutputImageType(std::ostream& os)
 			{
 				os << "Output image type is set to " << vm["output-image-type"].as<std::string>() << "." << std::endl;
+			}
+
+			void DisplayImageSize(std::ostream& os)
+			{
+				if (vm.count("image-size")) {
+					// os << "Image size: " << vm["image-size"].as<std::string>() << std::endl;
+					os << "Image size: " << imageSize << std::endl;
+				}
 			}
 
 			void DisplayOutputImageFolder(std::ostream& os)
@@ -203,6 +216,28 @@ namespace cvdemo
 				}
 				return vm["output-image-type"].as<std::string>();
 			}
+
+			//std::string GetImageSize()
+			//{
+			//	if (!isParsed) {
+			//		_Parse();
+			//	}
+			//	if (!isValid) {
+			//		throw std::exception("Options are invalid.");
+			//	}
+			//	return (vm.count("image-size") > 0) ? vm["image-size"].as<std::string>() : "";
+			//}
+			cv::Size GetImageSize()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return imageSize;
+			}
+
 			std::string GetOutputImageFolder()
 			{
 				if (!isParsed) {
@@ -262,13 +297,17 @@ namespace cvdemo
 			po::options_description visible_options;
 			// po::options_description visible_options("Allowed options");
 			std::vector<std::string> unrecognized;
+			// Variables stored outside vm
+			cv::Size imageSize;
+			// ...
 
 		private:
 			void _Initialize();
 			void _Parse();
 			bool _IsProgramOptionsValid()
 			{
-				if (vm.count("output-image-folder")) {
+				if (vm.count("output-image-folder")
+					&& vm.count("image-size")) {   // tbd: check if imageSize > Size(0,0) ???
 					return true;
 				}
 				return false;

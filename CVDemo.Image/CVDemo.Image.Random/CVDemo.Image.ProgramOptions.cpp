@@ -7,6 +7,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <boost/program_options.hpp>
+#include "CVDemo.Image.ImageSizeUtil.hpp"
 #include "CVDemo.Image.ProgramOptions.hpp"
 
 using namespace cv;
@@ -58,6 +59,7 @@ namespace cvdemo
 			// config file
 			po::options_description config("Configuration");
 			config.add_options()
+				("image-size,S", po::value<string>(), "Image size")
 				("output-image-folder,P", po::value<string>(), "Output image folder")
 				("element-weight-dots,D", po::value<float>()->default_value(1.0f), "Random element weight for dots")
 				("element-weight-lines,L", po::value<float>()->default_value(1.0f), "Random element weight for lines")
@@ -145,6 +147,10 @@ namespace cvdemo
 				// isParsed = true;
 				isForOptionsDisplay = true;
 				// return;   // continue parsing???
+			}
+
+			if (vm.count("image-size")) {
+				imageSize = ImageSizeUtil::parse(vm["image-size"].as<std::string>());
 			}
 
 			isParsed = true;
