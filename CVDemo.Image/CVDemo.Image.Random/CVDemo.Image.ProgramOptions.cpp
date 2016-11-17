@@ -61,6 +61,7 @@ namespace cvdemo
 			config.add_options()
 				("image-size,S", po::value<string>(), "Image size")
 				("output-image-folder,P", po::value<string>(), "Output image folder")
+				("element-count,N", po::value<int>()->default_value(100), "Number of random elements to be added")
 				("element-weight-dots,D", po::value<float>()->default_value(1.0f), "Random element weight for dots")
 				("element-weight-lines,L", po::value<float>()->default_value(1.0f), "Random element weight for lines")
 				("element-weight-rectangles,R", po::value<float>()->default_value(1.0f), "Random element weight for rectangles")

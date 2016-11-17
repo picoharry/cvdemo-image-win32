@@ -129,6 +129,9 @@ namespace cvdemo
 					os << "Output image folder: " << vm["output-image-folder"].as<std::string>() << std::endl;
 				}
 
+				if (vm.count("element-count")) {
+					os << "Random element count: " << vm["element-count"].as<int>() << std::endl;
+				}
 				if (vm.count("element-weight-dots")) {
 					os << "Random element weight for dots: " << vm["element-weight-dots"].as<float>() << std::endl;
 				}
@@ -180,6 +183,12 @@ namespace cvdemo
 				}
 			}
 
+			void DisplayRandomElementCount(std::ostream& os)
+			{
+				if (vm.count("element-count")) {
+					os << "Random element count: " << vm["element-count"].as<int>() << std::endl;
+				}
+			}
 			void DisplayElementWeightForDots(std::ostream& os)
 			{
 				if (vm.count("element-weight-dots")) {
@@ -247,6 +256,17 @@ namespace cvdemo
 					throw std::exception("Options are invalid.");
 				}
 				return (vm.count("output-image-folder") > 0) ? vm["output-image-folder"].as<std::string>() : "";
+			}
+
+			int GetRandomElementCount()
+			{
+				if (!isParsed) {
+					_Parse();
+				}
+				if (!isValid) {
+					throw std::exception("Options are invalid.");
+				}
+				return (vm.count("element-count") > 0) ? vm["element-count"].as<int>() : 100;   // ????
 			}
 
 			float GetElementWeightForDots()

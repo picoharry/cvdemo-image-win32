@@ -79,6 +79,11 @@ Blends multiple images into a single image with weights.
 Blends a foregound image with a background image with the same size.
 
 
+## Image.Watermark
+
+Blends a watermark image onto a target image.
+
+
 ## Image.Panorama
 
 Stitches images into a single large image.
