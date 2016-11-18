@@ -124,6 +124,11 @@ Finds a region of an image that matches a given template.
 Face detection demo.
 
 
+## Image.Barcode
+
+Barcode detection demo.
+
+
 
 
 

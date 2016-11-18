@@ -21,6 +21,10 @@ cvdemo.image.sharpen.cfg
 cvdemo.image.mix.cfg
 cvdemo.image.random.cfg
 cvdemo.image.transform.cfg
+cvdemo.image.face.cfg
+cvdemo.image.barcode.cfg
+cvdemo.image.watermark.cfg
+
 
 
 ## Ignore Visual Studio temporary files, build results, and
