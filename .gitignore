@@ -1,3 +1,6 @@
+## Output folders
+output-images/
+
 ## Config files
 cvdemo.image.subtract.cfg
 cvdemo.image.resize.cfg
