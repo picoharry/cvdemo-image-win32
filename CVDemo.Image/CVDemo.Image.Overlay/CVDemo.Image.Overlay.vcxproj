@@ -148,19 +148,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="CVDemo.Image.OverlayProcessor.hpp" />
     <ClInclude Include="CVDemo.Image.ProgramOptions.hpp" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CVDemo.Image.Overlay.cpp" />
     <ClCompile Include="CVDemo.Image.OverlayProcessor.cpp" />
     <ClCompile Include="CVDemo.Image.ProgramOptions.cpp" />
-    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

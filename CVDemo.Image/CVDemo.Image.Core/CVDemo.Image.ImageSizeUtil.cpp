@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
-#include <opencv2/core/core.hpp>
+#include <opencv2/core.hpp>
 #include "CVDemo.Image.StringHelper.hpp"
 #include "CVDemo.Image.ImageSizeUtil.hpp"
 

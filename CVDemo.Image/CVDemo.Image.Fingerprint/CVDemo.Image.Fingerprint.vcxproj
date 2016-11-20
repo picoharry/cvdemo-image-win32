@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1BE5E7FE-D9A2-4960-9507-78D800EB069B}</ProjectGuid>
+    <ProjectGuid>{BE54EB70-DA1F-4BC6-A80D-2B747CA35B27}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CVDemoImageDiff</RootNamespace>
+    <RootNamespace>CVDemoImageFingerprint</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,32 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CVDemo.Image.DiffProcessor.hpp" />
-    <ClInclude Include="CVDemo.Image.ProgramOptions.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CVDemo.Image.Diff.cpp" />
-    <ClCompile Include="CVDemo.Image.DiffProcessor.cpp" />
-    <ClCompile Include="CVDemo.Image.ProgramOptions.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClCompile Include="CVDemo.Image.Fingerprint.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\opencv.win.native.redist.310.3.103116-dev\build\native\opencv.win.native.redist.targets" Condition="Exists('..\packages\opencv.win.native.redist.310.3.103116-dev\build\native\opencv.win.native.redist.targets')" />
-    <Import Project="..\packages\opencv.win.native.310.3.103116-dev\build\native\opencv.win.native.targets" Condition="Exists('..\packages\opencv.win.native.310.3.103116-dev\build\native\opencv.win.native.targets')" />
-    <Import Project="..\packages\boost.1.62.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.62.0.0\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_program_options-vc140.1.62.0.0\build\native\boost_program_options-vc140.targets" Condition="Exists('..\packages\boost_program_options-vc140.1.62.0.0\build\native\boost_program_options-vc140.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\opencv.win.native.redist.310.3.103116-dev\build\native\opencv.win.native.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\opencv.win.native.redist.310.3.103116-dev\build\native\opencv.win.native.redist.targets'))" />
-    <Error Condition="!Exists('..\packages\opencv.win.native.310.3.103116-dev\build\native\opencv.win.native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\opencv.win.native.310.3.103116-dev\build\native\opencv.win.native.targets'))" />
-    <Error Condition="!Exists('..\packages\boost.1.62.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.62.0.0\build\native\boost.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_program_options-vc140.1.62.0.0\build\native\boost_program_options-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options-vc140.1.62.0.0\build\native\boost_program_options-vc140.targets'))" />
-  </Target>
 </Project>
